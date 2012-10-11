@@ -2,10 +2,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.ghoome</groupId>
-    <artifactId>t5-blank</artifactId>
+    <artifactId>t5-mongodb</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>t5-blank Tapestry 5 Application</name>
+    <name>t5-mongodb Tapestry 5 Application</name>
         <dependencies>
         <!-- Too set up an application with a database, change the artifactId below to
              tapestry-hibernate, and add a dependency on your JDBC driver. You'll also
@@ -76,7 +76,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
 
     </dependencies>
     <build>
-        <finalName>t5-blank</finalName>
+        <finalName>t5-mongodb</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
