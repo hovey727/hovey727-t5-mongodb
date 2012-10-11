@@ -22,21 +22,12 @@
 						<li t:type="loop" source="pageNames" value="pageName"
 							class="prop:classForPageName"><t:pagelink
 								page="prop:pageName">${pageName}</t:pagelink></li>
-						<li><a href="http://blog.ghoome.com/" target="_blank">Blog</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<header class="jumbotron subhead" id="overview">
-		<div class="container">
-			<h1>${message:page.index.welcome}</h1>
-			<p class="lead">${message:page.index.waiting}</p>
-			<p><a class="btn btn-primary btn-large" href="http://blog.ghoome.com/"
-				target="_blank">Visit Blog</a></p>
-		</div>
-	</header>
 	<div class="container">
 		<div class="row">
 			<t:body/>
