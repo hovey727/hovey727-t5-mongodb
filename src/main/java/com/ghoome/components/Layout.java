@@ -7,18 +7,12 @@ import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.SymbolConstants;
 
-/**
- * Layout component for pages of application t5-blank.
- */
 @Import(stylesheet = { 
 	"context:static/css/bootstrap.css",
-	//"context:static/css/bootstrap-responsive.css",
+	"context:static/css/bootstrap-responsive.css",
 	"context:static/css/docs.css"
 })
 public class Layout {
-	/**
-	 * The page title, for the <title> element and the <h1>element.
-	 */
 	@Property
 	@Parameter(required = true, defaultPrefix = BindingConstants.LITERAL)
 	private String title;

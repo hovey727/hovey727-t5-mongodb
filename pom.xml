@@ -119,4 +119,5 @@
 		<easymock-release-version>3.0</easymock-release-version>
 		<spring-data-mongodb-version>1.1.0.RELEASE</spring-data-mongodb-version>
 	</properties>
+	
 </project>
