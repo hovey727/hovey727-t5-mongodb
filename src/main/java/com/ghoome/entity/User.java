@@ -15,6 +15,7 @@
  */
 package com.ghoome.entity;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,6 +23,24 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class User {
 
 	@Id
-	String id;
-	String username;
+	private String id;
+	private String username;
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public User(String username) {
+		super();
+		this.id = new ObjectId().toString();
+		this.username = username;
+	}
 }

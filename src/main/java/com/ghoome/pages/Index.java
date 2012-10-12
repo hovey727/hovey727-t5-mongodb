@@ -10,9 +10,11 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.geo.Point;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 import com.ghoome.entity.Address;
 import com.ghoome.entity.Person;
+import com.ghoome.entity.User;
 import com.ghoome.repository.PersonRepository;
 
 public class Index {
@@ -27,30 +29,39 @@ public class Index {
 	}
 	
 	Object onActionFromAddPerson(){
-		Person p = new Person();
-		Set<Address> sas = new HashSet<Address>();
-		for(int j=0;j<3;j++){
-			sas.add(new Address("street-"+Math.random(),
-					"zipcode-"+Math.random(),"city-"+Math.random()));
+		long start = System.currentTimeMillis();
+		for(int i=0;i<1*10000;i++){
+			User user = new User("chinaz"+i);
+			template.save(user);
+			Person p = new Person();
+			p.setCreator(user);
+			Set<Address> sas = new HashSet<Address>();
+			for(int j=0;j<3;j++){
+				sas.add(new Address("street-"+Math.random(),
+						"zipcode-"+Math.random(),"city-"+Math.random()));
+			}
+			sas.add(new Address("shenzhen","10000","guangdong"));
+			p.setShippingAddresses(sas);
+			p.setAddress(new Address("street-main","zipcode-main","city-main"));
+			p.setAge(20);
+			p.setEmail("a"+i+"@b.c");
+			p.setFirstname("a"+i);
+			p.setLastname("b");
+			p.setLocation(new Point(22,22));
+			
+			repository.save(p);
 		}
-		sas.add(new Address("shenzhen","10000","guangdong"));
-		p.setShippingAddresses(sas);
-		p.setAddress(new Address("street-main","zipcode-main","city-main"));
-		p.setAge(20);
-		p.setEmail("a@b.c");
-		p.setFirstname("li");
-		p.setLastname("wei");
-		p.setLocation(new Point(22,22));
 		
-		repository.save(p);
+		long end = System.currentTimeMillis();
+		System.out.println("total: "+(end-start));
 		
 		return this;
 	}
 	
 	Object onActionFromQueryPerson(){
 		Query q = new Query();
-		q.addCriteria(new Criteria("lastname").is("wei"));
-		q.fields().include("shippingAddresses");
+		q.addCriteria(new Criteria("lastname").is("b"));
+		//q.fields().include("shippingAddresses").include("creator");
 		Person p = (Person)template.findOne(q, Person.class);
 		
 		System.out.println("person: "+p);
@@ -65,6 +76,15 @@ public class Index {
 					+",city: "+add.getCity());
 		}
 		
+		return this;
+	}
+	
+	Object onActionFromUpdatePerson(){
+		Query q = new Query();
+		q.addCriteria(new Criteria("lastname").is("b"));
+		//q.fields().include("shippingAddresses").include("creator");
+		//Person p = (Person)template.findOne(q, Person.class);
+		template.updateMulti(q, new Update().set("firstname", "fa"), Person.class);
 		return this;
 	}
 }

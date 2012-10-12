@@ -4,10 +4,12 @@
 <br />
 <br />
 <t:form t:id="indexForm">
-	<t:submit value="清空数据" class="btn" />
+	<t:submit value="清空数据" class="btn btn-large" />
 </t:form>
 
-<t:actionlink t:id="addPerson" class="btn">添加测试数据</t:actionlink>
+<t:actionlink t:id="addPerson" class="btn btn-large">添加测试数据</t:actionlink>
 &nbsp;&nbsp;
-<t:actionlink t:id="queryPerson" class="btn">获取数据测试</t:actionlink>
+<t:actionlink t:id="queryPerson" class="btn btn-large">获取数据测试</t:actionlink>
+&nbsp;&nbsp;
+<t:actionlink t:id="updatePerson" class="btn btn-large">更新数据测试</t:actionlink>
 </html>

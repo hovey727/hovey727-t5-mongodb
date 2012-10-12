@@ -51,7 +51,7 @@ public class Person extends Contact {
 	private Set<Address> shippingAddresses;
 
 	@DBRef
-	User creator;
+	private User creator;
 
 	public Person() {
 
@@ -219,6 +219,14 @@ public class Person extends Contact {
 	public int hashCode() {
 
 		return getId().hashCode();
+	}
+
+	public User getCreator() {
+		return creator;
+	}
+
+	public void setCreator(User creator) {
+		this.creator = creator;
 	}
 
 	@Override
