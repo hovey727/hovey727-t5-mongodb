@@ -41,7 +41,6 @@ public class Person extends Contact {
 	@Indexed(unique = true, dropDups = true)
 	private String email;
 	private Integer age;
-	@SuppressWarnings("unused")
 	private Sex sex;
 	Date createdAt;
 
@@ -76,7 +75,6 @@ public class Person extends Contact {
 		this.lastname = lastname;
 		this.age = age;
 		this.sex = sex;
-		this.email = (firstname == null ? "noone" : firstname.toLowerCase()) + "@dmband.com";
 		this.createdAt = new Date();
 	}
 
@@ -223,11 +221,13 @@ public class Person extends Contact {
 		return getId().hashCode();
 	}
 
-	/* (non-Javadoc)
-	* @see java.lang.Object#toString()
-	*/
 	@Override
 	public String toString() {
-		return String.format("%s %s", firstname, lastname);
+		return "Person [firstname=" + firstname + ", lastname=" + lastname
+				+ ", email=" + email + ", age=" + age + ", sex=" + sex
+				+ ", createdAt=" + createdAt + ", location=" + location
+				+ ", address=" + address + ", shippingAddresses="
+				+ shippingAddresses + ", creator=" + creator + "]";
 	}
+
 }

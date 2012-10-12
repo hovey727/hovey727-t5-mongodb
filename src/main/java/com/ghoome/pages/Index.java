@@ -1,41 +1,68 @@
 package com.ghoome.pages;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.inject.Inject;
 
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.geo.Point;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+
+import com.ghoome.entity.Address;
 import com.ghoome.entity.Person;
-import com.ghoome.entity.Person.Sex;
 import com.ghoome.repository.PersonRepository;
 
 public class Index {
 	@Inject
 	private PersonRepository repository;
-	private Person dave, oliver, carter, boyd, stefan, leroi, alicia;
+	@Inject
+	private MongoTemplate template;
 	
 	Object onActionFromIndexForm(){
 		repository.deleteAll();
-
-		dave = new Person("Dave", "Matthews", 42);
-		oliver = new Person("Oliver August", "Matthews", 4);
-		carter = new Person("Carter", "Beauford", 49);
-		try {
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		return this;
+	}
+	
+	Object onActionFromAddPerson(){
+		Person p = new Person();
+		Set<Address> sas = new HashSet<Address>();
+		for(int j=0;j<3;j++){
+			sas.add(new Address("street-"+Math.random(),
+					"zipcode-"+Math.random(),"city-"+Math.random()));
 		}
+		sas.add(new Address("shenzhen","10000","guangdong"));
+		p.setShippingAddresses(sas);
+		p.setAddress(new Address("street-main","zipcode-main","city-main"));
+		p.setAge(20);
+		p.setEmail("a@b.c");
+		p.setFirstname("li");
+		p.setLastname("wei");
+		p.setLocation(new Point(22,22));
 		
-		boyd = new Person("Boyd", "Tinsley", 45);
-		stefan = new Person("Stefan", "Lessard", 34);
-		leroi = new Person("Leroi", "Moore", 41);
-		alicia = new Person("Alicia", "Keys", 30, Sex.FEMALE);
-
-		repository.save(Arrays.asList(oliver, dave, carter, boyd, stefan, leroi, alicia));
+		repository.save(p);
 		
-		List<Person> result = repository.findAll();
-		for(Person p:result){
-			System.out.println("person: "+p.toString());
+		return this;
+	}
+	
+	Object onActionFromQueryPerson(){
+		Query q = new Query();
+		q.addCriteria(new Criteria("lastname").is("wei"));
+		q.fields().include("shippingAddresses");
+		Person p = (Person)template.findOne(q, Person.class);
+		
+		System.out.println("person: "+p);
+		
+		Set<Address> sas = p.getShippingAddresses();
+		Iterator<Address> it = sas.iterator();
+		while(it.hasNext()){
+			Address add = it.next();
+			System.out.println(
+					"street: "+add.getStreet()
+					+",zip: "+add.getZipCode()
+					+",city: "+add.getCity());
 		}
 		
 		return this;

@@ -33,19 +33,5 @@
 			<t:body/>
 		</div>
 	</div>
-	<!-- end page -->
-	<!-- start footer -->
-	<footer class="footer">
-		<div class="container">
-			<p class="pull-right">
-				<a href="#">Back to top</a>
-			</p>
-			<p>
-				GHOOME ALL RIGHTS RESERVED <a href="http://e.weibo.com/ghoome"
-					target="_blank">@ghoome</a>
-			</p>
-		</div>
-	</footer>
-	<!-- end footer -->
 </body>
 </html>
