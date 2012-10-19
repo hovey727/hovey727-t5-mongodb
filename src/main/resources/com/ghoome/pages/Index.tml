@@ -12,4 +12,6 @@
 <t:actionlink t:id="queryPerson" class="btn btn-large">获取数据测试</t:actionlink>
 &nbsp;&nbsp;
 <t:actionlink t:id="updatePerson" class="btn btn-large">更新数据测试</t:actionlink>
+&nbsp;&nbsp;
+<t:actionlink t:id="groupPerson" class="btn btn-large">分组数据测试</t:actionlink>
 </html>

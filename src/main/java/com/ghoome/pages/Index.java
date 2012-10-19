@@ -6,8 +6,11 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import org.apache.xpath.objects.XObject;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.geo.Point;
+import org.springframework.data.mongodb.core.mapreduce.GroupBy;
+import org.springframework.data.mongodb.core.mapreduce.GroupByResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -85,6 +88,22 @@ public class Index {
 		//q.fields().include("shippingAddresses").include("creator");
 		//Person p = (Person)template.findOne(q, Person.class);
 		template.updateMulti(q, new Update().set("firstname", "fa"), Person.class);
+		return this;
+	}
+	
+	Object onActionFromGroupPerson(){
+		GroupByResults<Person> results = template.group(
+				"person",
+				GroupBy.keyFunction("function(doc) { return { email : doc.email }; }").initialDocument("{ count: 0 }")
+						.reduceFunction("function(doc, prev) { prev.count += 1 }"), Person.class);
+		
+		System.out.println("raw: "+results.getRawResults());
+		
+		Iterator<Person> pit = results.iterator();
+		while(pit.hasNext()){
+			Person p = pit.next();
+			System.out.println("p: "+p);
+		}
 		return this;
 	}
 }
